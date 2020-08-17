@@ -34,27 +34,31 @@ const readline = require("readline");
 				var highLow = await ask(`Is it higher or lower ?`);
 
 				if (highLow === "higher") {
-					min = contestantOne + 1;
-					contestantOne = randomNum(min, max);
+					min = dellGuess + 1;
+					dellGuess = randomNum(min, max);
 				} else if (highLow === "lower") {
-					max = contestantOne - 1;
+					max = dellGuess - 1;
 
-					contestantOne = randomNum(min, max);
+					dellGuess = randomNum(min, max);
 				} else {
 					console.log("input not recognized");
 				} //catch all
-				answer = await ask(`Is the answer ${contestantOne}, "yes" or "no"?`);
+				answer = await ask(`Is the answer ${dellGuess}, "yes" or "no"?`);
 
-//-----------------------Cheat Function---------------------------------//
+				//-----------------------Cheat Function---------------------------------//
 				if (max <= Math.ceil((min + max) / 2)) {
-					console.log("'YOU CHEATED FEED HIM TO THE GATORS!!!!" + "\n" + "GOODBYE FOREVER YOU FILTHY ANIMAL!'");
+					console.log(
+						"'YOU CHEATED FEED HIM TO THE GATORS!!!!" +
+							"\n" +
+							"GOODBYE FOREVER YOU FILTHY ANIMAL!'"
+					);
 					process.exit();
 				}
-		
-//----------------------Win and  Sign out------------------//				
+
+				//----------------------Win and  Sign out------------------//
 				if (answer === "yes") {
 					console.log(
-						"Victory is Yours!!! Would you like to play again? This time I DellPc will think of a number!"
+						"Victory is Yours!!! Now get lost and leave me alone"
 					);
 					process.exit();
 				}
@@ -62,6 +66,3 @@ const readline = require("readline");
 		}
 	}
 }
-
-
-
