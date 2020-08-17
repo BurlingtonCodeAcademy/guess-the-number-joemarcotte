@@ -1,18 +1,68 @@
-const readline = require('readline');
-const rl = readline.createInterface(process.stdin, process.stdout);
+const readline = require("readline");
+{
+	const rl = readline.createInterface(process.stdin, process.stdout);
 
-function ask(questionText) {
-  return new Promise((resolve, reject) => {
-    rl.question(questionText, resolve);
-  });
-}
+	function ask(questionText) {
+		return new Promise((resolve, reject) => {
+			rl.question(questionText, resolve);
+		});
+	}
 
-start();
+	function randomNum(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) + min);
+	}
+	start();
+	async function start() {
+		console.log(
+			"Let's play a game where you (Human) make up a number and I (DellPc) try to guess it."
+		);
 
-async function start() {
-  console.log("Let's play a game where you (human) make up a number and I (computer) try to guess it.")
-  let secretNumber = await ask("What is your secret number?\nI won't peek, I promise...\n");
-  console.log('You entered: ' + secretNumber);
-  // Now try and complete the program.
-  process.exit();
+		let secretNum = await ask(
+			"What is your secret number?\nI won't peek, I promise..If you try and cheat prepare to meet your DOOOOOOM!!!!!\n"
+		);
+		let min = 0; //min
+		let max = 100; //max
+		let dellGuess = randomNum(min, max); //computers guess
+
+		let answer = await ask(`Is the answer ${dellGuess}, "yes" or "no"?`);
+		// Now try and complete the program.
+		if (answer === "yes") {
+			console.log(`Congrats you won!`);
+			process.exit();
+		} else {
+			while (answer !== "yes") {
+				var highLow = await ask(`Is it higher or lower ?`);
+
+				if (highLow === "higher") {
+					min = dellGuess + 1;
+					dellGuess = randomNum(min, max);
+				} else if (highLow === "lower") {
+					max = dellGuess - 1;
+
+					dellGuess = randomNum(min, max);
+				} else {
+					console.log("input not recognized");
+				} //catch all
+				answer = await ask(`Is the answer ${dellGuess}, "yes" or "no"?`);
+
+				//-----------------------Cheat Function---------------------------------//
+				if (max <= Math.ceil((min + max) / 2)) {
+					console.log(
+						"'YOU CHEATED FEED HIM TO THE GATORS!!!!" +
+							"\n" +
+							"GOODBYE FOREVER YOU FILTHY ANIMAL!'"
+					);
+					process.exit();
+				}
+
+				//----------------------Win and  Sign out------------------//
+				if (answer === "yes") {
+					console.log(
+						"Victory is Yours!!! Now get lost and leave me alone"
+					);
+					process.exit();
+				}
+			}
+		}
+	}
 }
