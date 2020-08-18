@@ -1,4 +1,8 @@
+//------------------ Use lowercase for gameplay functions-----------------------------------// 
+
+//------------------------ReadAble Stream Data Boiler PLate-----------------------------------------//
 const readline = require("readline");
+
 {
 	const rl = readline.createInterface(process.stdin, process.stdout);
 
@@ -7,10 +11,13 @@ const readline = require("readline");
 			rl.question(questionText, resolve);
 		});
 	}
-
+//---------------------------------Random Number Generator------------------------------------------//
 	function randomNum(min, max) {
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
+
+
+	//-----------------------------------------------Start and GamePlay Functions----------------------//
 	start();
 	async function start() {
 		console.log(
@@ -33,7 +40,7 @@ const readline = require("readline");
 			while (answer !== "yes") {
 				var highLow = await ask(`Is it higher or lower ?`);
 
-				if (highLow === "higher") {
+				if (highLow === "higher" ) {
 					min = dellGuess + 1;
 					dellGuess = randomNum(min, max);
 				} else if (highLow === "lower") {
@@ -41,7 +48,7 @@ const readline = require("readline");
 
 					dellGuess = randomNum(min, max);
 				} else {
-					console.log("input not recognized");
+					console.log("Input not recognized please try again!");
 				} //catch all
 				answer = await ask(`Is the answer ${dellGuess}, "yes" or "no"?`);
 
@@ -55,11 +62,9 @@ const readline = require("readline");
 					process.exit();
 				}
 
-				//----------------------Win and  Sign out------------------//
+				//----------------------Win and  Sign out Runs after more than 1 guess is made------------------//
 				if (answer === "yes") {
-					console.log(
-						"Victory is Yours!!! Now get lost and leave me alone"
-					);
+					console.log("Victory is Yours!!! Now get lost and leave me alone");
 					process.exit();
 				}
 			}
